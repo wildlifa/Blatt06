@@ -1,6 +1,7 @@
 package com.example.blatt06;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +32,8 @@ public class ShowActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
-        loadData();
+        Intent intent = getIntent();
+        //loadData();
 
     }
 
@@ -61,6 +63,7 @@ public class ShowActivity extends ListActivity {
     }
     private void loadData() {
         JSONObject data = new JSONObject();
+
         try {
             data.put("web", "requestEntrys");
         } catch (JSONException e) {
@@ -71,6 +74,8 @@ public class ShowActivity extends ListActivity {
 
         Request request = new Request.Builder().url("http://projects.hcilab.org/pmi/").post(body).build();
         client.newCall(request).enqueue(new Callback() {
+            JSONArray data;
+
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "ERROR #001" + e.toString());
@@ -80,12 +85,14 @@ public class ShowActivity extends ListActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String body = response.body().string();
                 if (!response.isSuccessful()){ Log.e(TAG, "ERROR #002" + body);} else {
-                    final JSONArray data;
+
                     try {
                         data = new JSONArray(body);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+
                     runOnUiThread(new Runnable(){
                         public void run(){
                             update(data);

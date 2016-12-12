@@ -8,6 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     private Button toSendButton;
+    private Button toShowButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -22,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(myIntent);
             }
         });
+
+        toShowButton = (Button) findViewById(R.id.toShowButton);
+        toShowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, ShowActivity.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
+
     }
 
 }
