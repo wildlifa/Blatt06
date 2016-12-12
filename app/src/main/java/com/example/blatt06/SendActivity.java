@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -22,7 +23,10 @@ import okhttp3.Response;
 
 public class SendActivity extends AppCompatActivity {
     private static final String TAG = SendActivity.class.getSimpleName();
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
     private final OkHttpClient client = new OkHttpClient();
+
     private EditText etName;
     private EditText etMessage;
     private Button b;
@@ -60,7 +64,7 @@ public class SendActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        Log.e(TAG, "ERROR#001");
+                        Log.e(TAG, "ERROR #001" + e.toString());
                     }
 
                     @Override
