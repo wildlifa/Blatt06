@@ -23,8 +23,7 @@ import okhttp3.Response;
 
 public class SendActivity extends AppCompatActivity {
     private static final String TAG = SendActivity.class.getSimpleName();
-    public static final MediaType JSON
-            = MediaType.parse("application/json; charset=utf-8");
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private final OkHttpClient client = new OkHttpClient();
 
     private EditText etName;

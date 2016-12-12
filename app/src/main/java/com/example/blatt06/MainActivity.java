@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         toShowButton = (Button) findViewById(R.id.toShowButton);
         toShowButton.setOnClickListener(new View.OnClickListener() {
+            
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(MainActivity.this, ShowActivity.class);

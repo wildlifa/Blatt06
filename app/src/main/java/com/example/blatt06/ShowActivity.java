@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,16 +25,19 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ShowActivity extends ListActivity {
+public class ShowActivity extends AppCompatActivity {
+    private ListView listView;
     private static final String TAG = ShowActivity.class.getSimpleName();
     private final OkHttpClient client = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
         Intent intent = getIntent();
-        //loadData();
+        listView = (ListView) findViewById(R.id.listView);
+        loadData();
 
     }
 
@@ -58,7 +62,7 @@ public class ShowActivity extends ListActivity {
         }
 
         ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
-        setListAdapter(adapter);
+        listView.setAdapter(adapter);
 
     }
     private void loadData() {
@@ -74,7 +78,7 @@ public class ShowActivity extends ListActivity {
 
         Request request = new Request.Builder().url("http://projects.hcilab.org/pmi/").post(body).build();
         client.newCall(request).enqueue(new Callback() {
-            JSONArray data;
+            JSONArray data = null;
 
             @Override
             public void onFailure(Call call, IOException e) {
