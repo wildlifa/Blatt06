@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SendActivity" />
-        <activity android:name=".ShowActivity"></activity>
+        <activity android:name=".ShowActivity" />
+        <activity android:name=".MessageDetailsActivity"></activity>
     </application>
 
 </manifest>

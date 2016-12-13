@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -30,6 +32,8 @@ public class ShowActivity extends AppCompatActivity {
     private static final String TAG = ShowActivity.class.getSimpleName();
     private final OkHttpClient client = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    List<String> messageList = new ArrayList<>();
+    List<String> nameList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +42,21 @@ public class ShowActivity extends AppCompatActivity {
         Intent intent = getIntent();
         listView = (ListView) findViewById(R.id.listView);
         loadData();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent displayIntent = new Intent(ShowActivity.this, MessageDetailsActivity.class);
+                displayIntent.putExtra("name","TODO");
+                ShowActivity.this.startActivity(displayIntent);
+            }
+        });
 
     }
 
     public void update(JSONArray data){
         Log.e(TAG, data.toString());
-        List<String> list = new ArrayList<>();
+
         for(int i = 0; i < data.length(); i++){
             JSONObject obj = null;
             try {
@@ -53,7 +66,14 @@ public class ShowActivity extends AppCompatActivity {
             }
             if(obj.has("message")){
                 try {
-                    list.add(obj.getString("message"));
+                    messageList.add(obj.getString("message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(obj.has("name")){
+                try {
+                    nameList.add(obj.getString("name"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -61,7 +81,7 @@ public class ShowActivity extends AppCompatActivity {
 
         }
 
-        ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
+        ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, messageList);
         listView.setAdapter(adapter);
 
     }
