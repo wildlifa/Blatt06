@@ -47,7 +47,8 @@ public class ShowActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent displayIntent = new Intent(ShowActivity.this, MessageDetailsActivity.class);
-                displayIntent.putExtra("name","TODO");
+                displayIntent.putExtra("name",nameList.get(i));
+                displayIntent.putExtra("message",messageList.get(i));
                 ShowActivity.this.startActivity(displayIntent);
             }
         });
